@@ -14,8 +14,11 @@ app.use(cors())
 app.use(express.json({limit:"100mb"}))
 
 mongoose.connect(process.env.MONGO_URI)
-
 .then(()=>console.log('mongodb connected successfully'))
 .catch((error)=>console.log('disconnected mongodb',error.message))
+
+app.get('/',req,res=>{
+    res.send('hello world')
+})
 
 app.listen(PORT,()=>console.log(`server running ${PORT}`))  
