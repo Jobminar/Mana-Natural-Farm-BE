@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid'; // For unique image names
 // Create a new banner
  const createBanners = async (req, res) => {
   try {
-    const { bannerName } = req.body;
+    const { bannerName } = req.body; 
 
     if (!req.file) {
       return res.status(400).json({ message: "Image file is required." });
@@ -14,7 +14,7 @@ import { v4 as uuidv4 } from 'uuid'; // For unique image names
     // Upload image to S3
     const key = `banners/${uuidv4()}-${req.file.originalname}`;
     const params = {
-      Bucket: process.env.aws_bucket_name,
+      Bucket: process.env.AWS_BUCKET_NAME,
       Key: key,
       Body: req.file.buffer,
       ContentType: req.file.mimetype,
