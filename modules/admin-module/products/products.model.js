@@ -7,9 +7,8 @@ const productSchema = new mongoose.Schema({
   productTitle: { type: String, required: true },
   productSubTitle: { type: String, required: true },
   productDescription: { type: String, required: true },
-  additionalFields: { type: Map, of: String }, // Dynamic fields
+  additionalFields: { type: Map, of: String }, 
 });
 
-// Export the Product Model
 
 export default mongoose.model("Product", productSchema);
