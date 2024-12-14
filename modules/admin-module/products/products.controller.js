@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import Product from '../products/products.model.js';
 import { v4 as uuidv4 } from "uuid";
 import s3 from "../../../config/aws.s3.js";

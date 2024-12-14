@@ -12,9 +12,9 @@ const app=express()
 
 app.use(cors())
 
-app.use("/",router)
-
 app.use(express.json({limit:"100mb"}))
+
+app.use("/",router)
 
 mongoose.connect(process.env.MONGO_URI)
 

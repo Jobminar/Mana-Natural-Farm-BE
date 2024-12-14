@@ -23,7 +23,7 @@ const createReel = async (req, res) => {
     const uploadVideo = await s3.upload(params).promise();
 
     // Create a new reel
-    const reel = new Reels({
+    const reel = new Reels({ 
       video: uploadVideo.Location, 
       description,
     });
@@ -116,7 +116,7 @@ const getAllReels = async (req, res) => {
         // Upload the new video
         const newVideoKey = `Reels/${uuidv4()}-${req.file.originalname}`;
         const uploadParams = {
-          Bucket: process.env.AWS_BUCKET_NAME,
+          Bucket: process.env.AWS_BUCKET_NAME,  
           Key: newVideoKey,
           Body: req.file.buffer,
           ContentType: req.file.mimetype,
@@ -131,15 +131,9 @@ const getAllReels = async (req, res) => {
       reel.video = videoURL;
       await reel.save();
   
-      res.status(200).json({
-        message: "Reel updated successfully",
-        reel,
-      });
+      res.status(200).json({ message: "Reel updated successfully",reel});
     } catch (error) {
-      res.status(500).json({
-        message: "Internal server error",
-        error: error.message,
-      });
+      res.status(500).json({message: "Internal server error", error: error.message});
     }
   };
     
