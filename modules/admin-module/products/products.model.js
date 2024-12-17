@@ -10,5 +10,4 @@ const productSchema = new mongoose.Schema({
   additionalFields: { type: Map, of: String }, 
 });
 
-
 export default mongoose.model("Product", productSchema);
