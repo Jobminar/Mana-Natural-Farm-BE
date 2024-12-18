@@ -5,6 +5,8 @@ import userAuthRouter from '../modules/user-module/user-auth/user.auth.route.js'
 import userSearchRouter from '../modules/user-module/user-search/user.search.route.js'
 import userWishlistRouter from '../modules/user-module/user-wishlist/wishlist.route.js'
 import userFeedbackRouter from '../modules/user-module/user-feedback/user.feedback.route.js'
+import userContactUsRouter from '../modules/user-module/contact-us/contactus.router.js'
+import userFaqRouter from '../modules/user-module/user-faq/faq.router.js'
 
 const app=express()
 
@@ -14,6 +16,6 @@ app.use("/user-auth",userAuthRouter)
 app.use("/user-search",userSearchRouter)
 app.use("/user-wishlist",userWishlistRouter)
 app.use("/user-feedback",userFeedbackRouter)
-
-
+app.use("/user-contactus",userContactUsRouter)
+app.use("/user-faq",userFaqRouter)
 export default app
