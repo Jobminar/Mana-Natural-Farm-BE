@@ -7,6 +7,7 @@ import userWishlistRouter from '../modules/user-module/user-wishlist/wishlist.ro
 import userFeedbackRouter from '../modules/user-module/user-feedback/user.feedback.route.js'
 import userContactUsRouter from '../modules/user-module/contact-us/contactus.router.js'
 import userFaqRouter from '../modules/user-module/user-faq/faq.router.js'
+import userAddressRouter from '../modules/user-module/user-address/user.address.route.js'
 
 const app=express()
 
@@ -18,4 +19,5 @@ app.use("/user-wishlist",userWishlistRouter)
 app.use("/user-feedback",userFeedbackRouter)
 app.use("/user-contactus",userContactUsRouter)
 app.use("/user-faq",userFaqRouter)
+app.use("/user-address",userAddressRouter)
 export default app

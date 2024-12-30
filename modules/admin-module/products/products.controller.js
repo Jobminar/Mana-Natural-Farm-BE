@@ -5,7 +5,19 @@ import s3 from "../../../config/aws.s3.js";
 // Create Product
 const createProduct = async (req, res) => {
   try {
-    const { categoryId, productName, productTitle, productSubTitle, productDescription, additionalFields } = req.body;
+    const { 
+      categoryId, 
+      productName, 
+      productTitle, 
+      productPrice, 
+      missCharges, 
+      SGST, 
+      handlingCharges, 
+      deliveryCharges, 
+      productSubTitle, 
+      productDescription, 
+      additionalFields 
+    } = req.body;
 
     // Validate required fields
     if (!productName || !productTitle || !productSubTitle || !productDescription) {
@@ -30,11 +42,16 @@ const createProduct = async (req, res) => {
     const product = new Product({
       categoryId,
       productName,
-      productImage: uploadImage.Location,  // Use correct field name
+      productImage: uploadImage.Location,
       productTitle,
+      productPrice,
+      missCharges: missCharges || 0,
+      SGST: SGST || 0,
+      handlingCharges: handlingCharges || 0,
+      deliveryCharges: deliveryCharges || 0,
       productSubTitle,
       productDescription,
-      additionalFields: additionalFields ? JSON.parse(additionalFields) : {}, // Parse additionalFields if provided
+      additionalFields: additionalFields ? JSON.parse(additionalFields) : {},
     });
 
     await product.save();
@@ -53,9 +70,8 @@ const getCategoryProducts = async (req, res) => {
       return res.status(400).json({ message: "categoryId is required" });
     }
 
-    // Fetch products for the specific categoryId
     const products = await Product.find({ categoryId })
-      .populate('categoryId', 'categoryName image'); // Optional: populate category details
+      .populate('categoryId', 'categoryName'); // Adjust populate fields as needed
 
     if (products.length === 0) {
       return res.status(404).json({ message: "No products found for the given category" });
@@ -81,20 +97,35 @@ const getAllProducts = async (req, res) => {
 const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const { categoryId, productName, productTitle, productSubTitle, productDescription, additionalFields } = req.body;
+    const { 
+      categoryId, 
+      productName, 
+      productTitle, 
+      productPrice, 
+      missCharges, 
+      SGST, 
+      handlingCharges, 
+      deliveryCharges, 
+      productSubTitle, 
+      productDescription, 
+      additionalFields 
+    } = req.body;
 
-    // Ensure categoryId is provided in the body
     const updatedFields = {
       categoryId,
       productName,
       productTitle,
+      productPrice,
+      missCharges: missCharges || 0,
+      SGST: SGST || 0,
+      handlingCharges: handlingCharges || 0,
+      deliveryCharges: deliveryCharges || 0,
       productSubTitle,
       productDescription,
       additionalFields: additionalFields ? JSON.parse(additionalFields) : {},
     };
 
     if (req.file) {
-      // Upload new image if provided
       const key = `product/${uuidv4()}-${req.file.originalname}`;
       const params = {
         Bucket: process.env.AWS_BUCKET_NAME,
@@ -103,7 +134,7 @@ const updateProduct = async (req, res) => {
         ContentType: req.file.mimetype,
       };
       const uploadImage = await s3.upload(params).promise();
-      updatedFields.productImage = uploadImage.Location; // Use the correct field name
+      updatedFields.productImage = uploadImage.Location;
     }
 
     const product = await Product.findByIdAndUpdate(id, updatedFields, { new: true });

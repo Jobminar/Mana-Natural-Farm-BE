@@ -5,6 +5,10 @@ const router=express.Router()
 
 router.post("/",userCartController.createCart)
 
-router.get("/",userCartController.getCartItemByUserId)
+router.get("/userId/:userId",userCartController.getCartItemByUserId)
+
+router.delete('/userId/:userId/itemId/:id', userCartController.deleteCartItems);
+
+router.delete("/userId/:userId",userCartController.deleteAllCartItems)
 
 export default router
